@@ -31,17 +31,17 @@ import { HousingLocation } from '../housinglocation';
       </ul>
     </section>
     <section class="listing-apply">
-        <h2 class="section-heading">Apply now to live here</h2>
-        <form [formGroup]="applyForm" (submit)="submitApplication()">
-          <label for="first-name">First Name</label>
-          <input id="first-name" type="text" formControlName="firstName" />
-          <label for="last-name">Last Name</label>
-          <input id="last-name" type="text" formControlName="lastName" />
-          <label for="email">Email</label>
-          <input id="email" type="email" formControlName="email" />
-          <button type="submit" class="primary">Apply now</button>
-        </form>
-      </section>
+      <h2 class="section-heading">Apply now to live here</h2>
+      <form [formGroup]="applyForm" (submit)="submitApplication()">
+        <label for="first-name">First Name</label>
+        <input id="first-name" type="text" formControlName="firstName" />
+        <label for="last-name">Last Name</label>
+        <input id="last-name" type="text" formControlName="lastName" />
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" />
+        <button type="submit" class="primary">Apply now</button>
+      </form>
+    </section>
   </article>`,
   styleUrl: './details.component.css',
 })
@@ -56,9 +56,12 @@ export class DetailsComponent {
   });
 
   constructor() {
-    const housingLocationId = Number(this.route.snapshot.params['id']);
-    this.housingLocation =
-      this.housingService.getHousingLocationById(housingLocationId);
+    const housingLocationId = parseInt(this.route.snapshot.params['id'], 10);
+    this.housingService
+      .getHousingLocationById(housingLocationId)
+      .then((housingLocation) => {
+        this.housingLocation = housingLocation;
+      });
   }
 
   submitApplication() {
